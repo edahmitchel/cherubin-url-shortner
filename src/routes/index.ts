@@ -1,8 +1,10 @@
 import { Express, Response, Request } from "express"
+import { createShortUrl } from "../controllers/shortUrl.controller"
 function routes(app: Express) {
     app.get("/check", (req: Request, res: Response) => {
-        res.send("works")
+        return res.send("works")
 
     })
+    app.post("/api/url", createShortUrl)
 }
 export default routes
