@@ -14,7 +14,7 @@ var options = {
         },
         servers: [
             {
-                url: 'https://cherubin-shortner.onrender.com',
+                url: 'https://cherubin-shortner.onrender.com/api',
             },
         ]
     },
