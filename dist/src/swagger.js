@@ -12,8 +12,13 @@ var options = {
             version: '1.0.0',
             description: 'API documentation for the Short URL service',
         },
+        servers: [
+            {
+                url: 'https://cherubin-shortner.onrender.com',
+            },
+        ]
     },
-    apis: ['./src/routes/index.ts'], // Specify the file containing your route definitions
+    apis: ['./src/routes/index.ts'],
 };
 var swaggerSpec = (0, swagger_jsdoc_1.default)(options);
 exports.default = swaggerSpec;
