@@ -8,7 +8,7 @@ import swaggerSpec from './swagger'; // Import the Swagger configuration
 
 dotenv.config()
 const app = express()
-const port = process.env.port as string
+const port = process.env.PORT as string
 app.use(express.json())
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.listen(port, () => {
