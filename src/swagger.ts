@@ -11,7 +11,7 @@ const options: swaggerJsdoc.Options = {
         servers: [
 
             {
-                url: 'https://cherubin-shortner.onrender.com',
+                url: 'https://cherubin-shortner.onrender.com/api',
             },
         ]
     },
