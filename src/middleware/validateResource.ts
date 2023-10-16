@@ -10,7 +10,10 @@ const validateResource = (resourceSchema: AnyObjectSchema) => async (req: Reques
         )
         next()
     } catch (error) {
-        return res.sendStatus(400)
+        console.log(error);
+
+
+        return res.status(400).json(error)
 
     }
 

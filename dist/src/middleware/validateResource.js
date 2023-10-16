@@ -51,7 +51,8 @@ var validateResource = function (resourceSchema) { return function (req, res, ne
                 return [3 /*break*/, 3];
             case 2:
                 error_1 = _a.sent();
-                return [2 /*return*/, res.sendStatus(400)];
+                console.log(error_1);
+                return [2 /*return*/, res.status(400).json(error_1)];
             case 3: return [2 /*return*/];
         }
     });
