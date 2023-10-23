@@ -5,8 +5,10 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 export async function registerUser(req: Request, res: Response) {
-    const { username, email, password } = req.body;
-
+    let { username, email, password }: { username: string, email: string, password: string } = req.body;
+    email = email.toLowerCase()
+    const foundUser = await UserModel.findOne({ email: email })
+    if (foundUser) return res.status(400).json({ message: 'User already exists' })
     // Hash the password before saving it
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -23,8 +25,8 @@ export async function registerUser(req: Request, res: Response) {
 }
 
 export async function loginUser(req: Request, res: Response) {
-    const { email, password } = req.body;
-
+    let { email, password } = req.body;
+    email = email.toLowerCase()
     try {
         const user = await UserModel.findOne({ email });
 

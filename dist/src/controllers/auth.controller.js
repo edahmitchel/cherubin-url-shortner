@@ -45,29 +45,37 @@ var bcrypt_1 = __importDefault(require("bcrypt"));
 var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 function registerUser(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var _a, username, email, password, hashedPassword, user, error_1;
+        var _a, username, email, password, foundUser, hashedPassword, user, error_1;
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
                     _a = req.body, username = _a.username, email = _a.email, password = _a.password;
-                    return [4 /*yield*/, bcrypt_1.default.hash(password, 10)];
+                    email = email.toLowerCase();
+                    return [4 /*yield*/, user_model_1.default.findOne({ email: email })];
                 case 1:
-                    hashedPassword = _b.sent();
-                    _b.label = 2;
+                    foundUser = _b.sent();
+                    if (foundUser)
+                        return [2 /*return*/, res.status(400).json({ message: 'User already exists' })
+                            // Hash the password before saving it
+                        ];
+                    return [4 /*yield*/, bcrypt_1.default.hash(password, 10)];
                 case 2:
-                    _b.trys.push([2, 4, , 5]);
+                    hashedPassword = _b.sent();
+                    _b.label = 3;
+                case 3:
+                    _b.trys.push([3, 5, , 6]);
                     return [4 /*yield*/, user_model_1.default.create({
                             username: username,
                             email: email,
                             password: hashedPassword,
                         })];
-                case 3:
+                case 4:
                     user = _b.sent();
                     return [2 /*return*/, res.status(201).json({ message: 'User registered successfully', user: user })];
-                case 4:
+                case 5:
                     error_1 = _b.sent();
                     return [2 /*return*/, res.status(500).json({ message: 'User registration failed', error: error_1 })];
-                case 5: return [2 /*return*/];
+                case 6: return [2 /*return*/];
             }
         });
     });
@@ -80,6 +88,7 @@ function loginUser(req, res) {
             switch (_b.label) {
                 case 0:
                     _a = req.body, email = _a.email, password = _a.password;
+                    email = email.toLowerCase();
                     _b.label = 1;
                 case 1:
                     _b.trys.push([1, 4, , 5]);
