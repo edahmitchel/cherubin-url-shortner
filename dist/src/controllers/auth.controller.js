@@ -96,7 +96,7 @@ function loginUser(req, res) {
                         return [2 /*return*/, res.status(401).json({ message: 'Incorrect password' })];
                     }
                     token = jsonwebtoken_1.default.sign({ userId: user._id, username: user.username }, process.env.JWT_SECRET);
-                    return [2 /*return*/, res.status(200).json({ message: 'Login successful', token: token })];
+                    return [2 /*return*/, res.status(200).json({ message: 'Login successful', token: token, user: { username: user.username, email: user.email } })];
                 case 4:
                     error_2 = _b.sent();
                     return [2 /*return*/, res.status(500).json({ message: 'Login failed', error: error_2 })];
