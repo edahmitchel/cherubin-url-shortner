@@ -42,28 +42,44 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAnalytics = exports.handleRedirect = exports.createShortUrl = void 0;
 var shortUrl_model_1 = __importDefault(require("../models/shortUrl.model"));
 var analytics_model_1 = __importDefault(require("../models/analytics.model"));
+var nanoid_1 = require("nanoid");
 function createShortUrl(req, res) {
     return __awaiter(this, void 0, void 0, function () {
-        var destination, userId, newShortUrl, error_1;
-        return __generator(this, function (_a) {
-            switch (_a.label) {
+        var _a, destination, alias, userId, shortId, existingShortUrl, newShortUrl, error_1;
+        return __generator(this, function (_b) {
+            switch (_b.label) {
                 case 0:
-                    destination = req.body.destination;
+                    _a = req.body, destination = _a.destination, alias = _a.alias;
                     userId = req.user.userId;
-                    _a.label = 1;
+                    _b.label = 1;
                 case 1:
-                    _a.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, shortUrl_model_1.default.create({
-                            destination: destination,
-                            user: userId,
-                        })];
+                    _b.trys.push([1, 6, , 7]);
+                    shortId = void 0;
+                    if (!alias) return [3 /*break*/, 3];
+                    return [4 /*yield*/, shortUrl_model_1.default.findOne({ shortId: alias }).lean()];
                 case 2:
-                    newShortUrl = _a.sent();
-                    return [2 /*return*/, res.status(201).json({ message: 'Success', data: { newShortUrl: newShortUrl } })];
+                    existingShortUrl = _b.sent();
+                    if (existingShortUrl) {
+                        return [2 /*return*/, res.status(400).json({ message: 'Alias is already in use' })];
+                    }
+                    shortId = alias;
+                    return [3 /*break*/, 4];
                 case 3:
-                    error_1 = _a.sent();
+                    // Generate a short random ID using nanoid
+                    shortId = (0, nanoid_1.nanoid)(8);
+                    _b.label = 4;
+                case 4: return [4 /*yield*/, shortUrl_model_1.default.create({
+                        destination: destination,
+                        user: userId,
+                        shortId: shortId,
+                    })];
+                case 5:
+                    newShortUrl = _b.sent();
+                    return [2 /*return*/, res.status(201).json({ message: 'Success', data: { newShortUrl: newShortUrl } })];
+                case 6:
+                    error_1 = _b.sent();
                     return [2 /*return*/, res.status(500).json({ message: 'Failed to create short URL', error: error_1 })];
-                case 4: return [2 /*return*/];
+                case 7: return [2 /*return*/];
             }
         });
     });

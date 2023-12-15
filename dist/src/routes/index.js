@@ -96,13 +96,15 @@ router.post('/auth/login', (0, validateResource_1.default)(login_schema_1.defaul
 *             properties:
 *               destination:
 *                 type: string
+*               alias:
+*                 type: string
 *     responses:
 *       201:
 *         description: Short URL created successfully
 *       500:
 *         description: Failed to create short URL
 */
-router.post("/api/url", auth_middleware_1.authenticateToken, (0, validateResource_1.default)(createShortUrl_schema_1.default), shortUrl_controller_1.createShortUrl);
+router.post("/url", auth_middleware_1.authenticateToken, (0, validateResource_1.default)(createShortUrl_schema_1.default), shortUrl_controller_1.createShortUrl);
 /**
  * @swagger
  * /short/{shortId}:
@@ -135,5 +137,5 @@ router.get("/short/:shortId", shortUrl_controller_1.handleRedirect);
 *         content:application/json:
  
 */
-router.get("/api/analytics", shortUrl_controller_1.getAnalytics);
+router.get("/analytics", shortUrl_controller_1.getAnalytics);
 exports.default = router;

@@ -3,7 +3,7 @@ export default object({
     body: object(
         {
 
-            destination: string().required("destination is required")
+            destination: string().required("destination is required"), alias: string().optional()
         }
     )
 })
