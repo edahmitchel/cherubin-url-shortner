@@ -113,7 +113,7 @@ router.post("/url", authenticateToken, validateResource(shortUrlSchema), createS
 
 /**
  * @swagger
- * /short/{shortId}:
+ * /s/{shortId}:
  *   get:
  *     summary: Redirect to the original URL using a short ID
  *     parameters:
@@ -129,7 +129,7 @@ router.post("/url", authenticateToken, validateResource(shortUrlSchema), createS
  *       404:
  *         description: Short URL not found
  */
-router.get("/short/:shortId", handleRedirect)
+router.get("/s/:shortId", handleRedirect)
 
 
 /**
